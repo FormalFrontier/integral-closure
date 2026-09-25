@@ -1,0 +1,99 @@
+version: "v0.4"
+project:
+  name: integral-closure
+  description: >-
+    Integral-closure descent along linear retractions and normal-domain descent
+    from arbitrary field scalar extensions of commutative algebras.
+  authors:
+    - Formal Frontier Agents
+  license: Apache-2.0
+sources:
+  - title: Integral-closure descent along linear retractions and arbitrary field scalar extensions
+    type: original-proof
+    relationship: formalizes
+    note: >-
+      Original production mathematical proofs and declarations contributed by Atlas
+      in commit 5fa0507983b7fc7af2ec95ea9698ac4faeab091a;
+      later ordinary-module interface and private-client assembly was integrated
+      in PR 7. This substantive repository is not a thin wrapper around the
+      later source-research adapter.
+  - title: "The Rising Sea: Foundations of Algebraic Geometry"
+    authors:
+      - Ravi Vakil
+    type: book
+    location: "October 21, 2025 draft, Exercise 5.4.M, physical/PDF page 169"
+    relationship: background
+    note: >-
+      Mathematical motivation: the exercise asks whether finiteness is needed
+      for a forward normal-domain implication. This formalization proves descent
+      for arbitrary field extensions. The book is not a project-licensed asset,
+      a proof contributor, or an endorsement of this formalization.
+automation:
+  methods:
+    - method: agent
+      tool_setup: >-
+        Formal Frontier AI agents used Lean and mathlib with reviewed project
+        contributions, ordinary imports and pinned toolchain/dependency revisions.
+  notes: >-
+    Original production proofs by Atlas; subsequent agents assembled ordinary
+    modules, maintained private clients and wrote documentation. No model,
+    cost or performance measurements are reported here.
+status:
+  scope: >-
+    An A-linear retraction of an injective algebra map into an integrally closed
+    domain descends integral closedness; domain and integral-closure descent from
+    an arbitrary field extension are separate results. No ascent, converse,
+    normalization or whole-source formalization is claimed.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+    - propext
+    - Classical.choice
+    - Quot.sound
+  main_results:
+    - declaration: IsIntegrallyClosed.of_linearRetract
+      file: IntegralClosure/LinearRetract.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+    - declaration: Algebra.TensorProduct.rightLinearMap
+      file: IntegralClosure/TensorProduct.lean
+      axioms: [propext, Quot.sound]
+    - declaration: Algebra.TensorProduct.rightLinearMap_includeLeft
+      file: IntegralClosure/TensorProduct.lean
+      sorry_count: 0
+      axioms: [propext, Quot.sound]
+    - declaration: Algebra.TensorProduct.isDomain_left
+      file: IntegralClosure/TensorProduct.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+    - declaration: Algebra.TensorProduct.isIntegrallyClosed_left
+      file: IntegralClosure/TensorProduct.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+fidelity:
+  divergences: >-
+    Vakil's cited exercise presents a finite-extension forward implication and
+    asks whether finiteness is needed; the library's field-extension theorem
+    omits finiteness, algebraicity and separability. The independent generic
+    retraction theorem is an original generalization, not a book excerpt.
+review:
+  status: "other: revision-specific independent agent review and internal acceptance recorded below"
+  notes: >-
+    Earlier mathematical code and the ordinary-import clients passed independent
+    project review before integration in PR 7, and standalone documentation and
+    metadata passed independent development review in PR 8. On 2026-09-25, the
+    independent non-author Prism agent reviewed the complete internal artifact
+    at 10c7646c82d94f208c60b13b1c11f3e29159497b, tree
+    e035151b7c088c11c204c031ff38746042191711, in review 3054. That review
+    covered the named stored README examples, generated API documentation,
+    mathematical semantics, build and proof evidence, provenance and rights.
+    Atlas accepted its full internal-artifact readiness and integrated the
+    identical tree at 197e6329f84ef37550582249a2c1a55a636f866b. These are
+    historical assessments of the named revisions, not self-certification of
+    this metadata or approval of later changes, public commit history,
+    publication or source-text coverage. Each release candidate requires
+    applicable independent review and a separate publication decision.
+    Schema validity is not review or release acceptance.
+acknowledgements: >-
+  Uses mathlib as a declared dependency. Vakil's book is cited only for the
+  mathematical question, not as a formalization author or licensed project asset.

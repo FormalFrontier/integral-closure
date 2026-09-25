@@ -1,0 +1,18 @@
+# Licensed under the Apache License, Version 2.0 (see LICENSE).
+# Authors: Formal Frontier Agents
+name = "integral-closure"
+version = "0.1.0"
+defaultTargets = ["IntegralClosure", "IntegralClosureTest"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "e37d88a26f3791ed5a93daa1f949af1021b8d103"
+
+[[lean_lib]]
+name = "IntegralClosure"
+
+[[lean_lib]]
+name = "IntegralClosureTest"
+roots = ["IntegralClosureTest.LeafClient", "IntegralClosureTest.RootClient",
+         "IntegralClosureTest.ReadmeLinearRetract", "IntegralClosureTest.ReadmeTensorProduct"]

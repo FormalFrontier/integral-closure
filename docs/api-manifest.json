@@ -1,0 +1,45 @@
+{
+  "analyzed_source_revision": "ae76530b1ba4d38d1dafef90a68f2fb0cce64157",
+  "api_sha256": "b8913d786caa92ce9f91b44fd35f3b220027ac8de84d99143702cfcc62e120a7",
+  "docgen_revision": "97d4ecdfc8e09e7f511724c25e303d448de6a3db",
+  "format": 1,
+  "generator": "scripts/generate_api.py",
+  "inputs": {
+    "IntegralClosure.lean": "fa4850bc40a45229f6101f18ec0e2ba95b5a84d7af8fbc64e0277c25371627f0",
+    "IntegralClosure/LinearRetract.lean": "a29e77da80234e5e4c9eafd972ea1a6befcedcf4a6b16a408790d9c3c0b68769",
+    "IntegralClosure/TensorProduct.lean": "93c16b75e5be361b628d293b39bbe92628fab7f1debe0f4e73879bee23926c8d",
+    "IntegralClosureTest/LeafClient.lean": "b927bb21ef6bc14f3b4ea52bfc8fc12f2137e4035dd19fcc0e4a450bdf3c2839",
+    "IntegralClosureTest/ReadmeLinearRetract.lean": "f37b75f399862023cfca2a1d55f96f6e3c720c22bfbfee3d8aa96312a5ba8c8c",
+    "IntegralClosureTest/ReadmeTensorProduct.lean": "748f7f3a44d2e93ca37e84d348af0251915be5092ad65d1361f5abfbb9911328",
+    "IntegralClosureTest/RootClient.lean": "4778042c3ea6684c694daa6355624944792d62a6b7c4cb2963ad74261c646a49",
+    "lake-manifest.json": "883de803c29844161499c47598e12d2154bb8fc074caa1432b83476588b7b3f7",
+    "lakefile.toml": "69b354aee475d6653f51c4995ae4bbfda2c1346cfee1ee2bdde2ca8d78bc8484",
+    "lean-toolchain": "8190e75a201741065fe508b28955dd64dd72d090babe5f70ce6848879d68ae88"
+  },
+  "modules": [
+    "IntegralClosure.LinearRetract",
+    "IntegralClosure.TensorProduct",
+    "IntegralClosure",
+    "IntegralClosureTest.LeafClient",
+    "IntegralClosureTest.RootClient",
+    "IntegralClosureTest.ReadmeLinearRetract",
+    "IntegralClosureTest.ReadmeTensorProduct"
+  ],
+  "native_record_sha256": {
+    "IntegralClosure": "a71ebc88c4b763bf2cba7e6d7e8d38ee0065e8c3584a765787f4e63c2769c181",
+    "IntegralClosure.LinearRetract": "449f761ae0115cf99aa058f4677580bc3127413626983e68ee09656df0fa6d43",
+    "IntegralClosure.TensorProduct": "5d7bb464bbf7a103b8b1c90d31fc79707e6faca736202685d9f21c51b98df6df",
+    "IntegralClosureTest.LeafClient": "85c19bcd02d06507a61e463819a509fb83e102cf47712ac0e0e2e76fd70edb59",
+    "IntegralClosureTest.ReadmeLinearRetract": "61303c181f97ae6ffad464322be1d7d38aa30c64306d46ff861e5315afd4b766",
+    "IntegralClosureTest.ReadmeTensorProduct": "7483e5c952808a3af8fa738a1ac97de8167eaf8db9627521b472110b24035df4",
+    "IntegralClosureTest.RootClient": "516ca66c529f3fb33f9b94a51e976f105986b4caf8e8424d9f5e912570b6232b"
+  },
+  "proof_certification": false,
+  "public_declarations": [
+    "IsIntegrallyClosed.of_linearRetract",
+    "Algebra.TensorProduct.rightLinearMap",
+    "Algebra.TensorProduct.rightLinearMap_includeLeft",
+    "Algebra.TensorProduct.isDomain_left",
+    "Algebra.TensorProduct.isIntegrallyClosed_left"
+  ]
+}
