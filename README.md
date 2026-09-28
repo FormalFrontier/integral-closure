@@ -9,27 +9,42 @@ collective author credit does not assert copyright ownership.
 
 Reusable Lean theory of integral closure and normal-domain descent.
 
-The library proves that an injective algebra map into an integrally closed
-domain descends integral closedness when it admits a linear retraction. It then
-applies this criterion to field scalar extension: if `l/k` is any field
-extension and `A ⊗[k] l` is an integrally closed domain, then the commutative
-`k`-algebra `A` is an integrally closed domain. The extension need not be finite,
-algebraic or separable. The linear retraction in the generic criterion is only
-linear: it need not preserve multiplication, and the algebra map need not be
-integral. The field-extension criterion makes no finite-dimensionality assumption.
+## Headline results
 
-Import `IntegralClosure` for both criteria, or import
-`IntegralClosure.LinearRetract` and `IntegralClosure.TensorProduct` directly for
-their respective public declarations. In particular,
-`IsIntegrallyClosed.of_linearRetract` accepts an injective algebra map and a
-linear left inverse; `Algebra.TensorProduct.rightLinearMap` evaluates a linear
-functional on the right tensor factor, while
-`Algebra.TensorProduct.rightLinearMap_includeLeft` says that this map retracts
-`includeLeft` when the functional sends `1` to `1`. The independent theorems
-`Algebra.TensorProduct.isDomain_left` and
-`Algebra.TensorProduct.isIntegrallyClosed_left` descend domain and integral
-closedness from a field scalar extension. No global instances are installed by
-these descent theorems; users can pass the proofs locally as needed.
+- **Integral closedness descends along a linear retraction.** For commutative
+  rings `A` and `B`, an injective algebra map `A → B` into an integrally closed
+  domain, together with an `A`-linear left inverse `B →ₗ[A] A`, gives integral
+  closedness of `A`. The theorem
+  [`IsIntegrallyClosed.of_linearRetract`](IntegralClosure/LinearRetract.lean#L43)
+  derives the domain structure on `A` inside its proof. The retraction need not
+  preserve multiplication, and the algebra map need not be integral.
+- **Normal-domain descent from any field scalar extension.** For any field
+  extension `l/k` and commutative `k`-algebra `A`, if `A ⊗[k] l` is a domain,
+  then so is `A`; if the tensor product is also integrally closed, then so is
+  `A`. The separate theorems
+  [`isDomain_left`](IntegralClosure/TensorProduct.lean#L61) and
+  [`isIntegrallyClosed_left`](IntegralClosure/TensorProduct.lean#L71) in
+  `Algebra.TensorProduct` require no finite-dimensionality, algebraicity or
+  separability assumption on the field extension.
+- **Tensor-factor evaluation gives linear retractions.** For the same fields
+  and algebra, any `k`-linear functional `f : l →ₗ[k] k` defines an `A`-linear
+  [`rightLinearMap`](IntegralClosure/TensorProduct.lean#L45) from `A ⊗[k] l`
+  to `A`, taking `a ⊗ₜ[k] b` to `a * algebraMap k A (f b)`. When `f 1 = 1`,
+  [`rightLinearMap_includeLeft`](IntegralClosure/TensorProduct.lean#L54)
+  proves it is a left inverse to `includeLeft`. Normalization is needed for
+  this retraction equation, not for constructing the evaluation map; the
+  functional and evaluation map need not be multiplicative.
+
+These five public declarations build on mathlib's integral-closure, fraction-ring,
+tensor-product and projective-module duality infrastructure. They establish
+descent, not ascent, a converse or normalization. The descent theorems return
+typeclass proofs for local use rather than installing global instances; the
+tensor evaluation construction is noncomputable.
+
+Import [`IntegralClosure`](IntegralClosure.lean) for both criteria, or import
+`IntegralClosure.LinearRetract` and `IntegralClosure.TensorProduct` directly.
+The [API and examples below](#public-api-and-examples) give the complete
+signatures, usage and proof explanations.
 
 ## Public API and examples
 
