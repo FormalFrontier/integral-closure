@@ -7,24 +7,32 @@ project docstrings. Source links point to the files shipped in this checkout.
 The reference is not an interactive dependency website and bundles no JavaScript,
 fonts, remote styles, mathematical source PDF or external documentation text.
 
-## Reproduction
+## Optional historical reproduction
 
 The exact analyzed Lean/configuration inputs are identified by full revision and
 SHA256 in `api-manifest.json`. Final release review additionally binds this manifest
-and generated file to the final candidate commit/tree. Documentation-only later
-commits do not change those mathematical input hashes; source or pin changes
-require fresh native generation and affected verification.
+and generated file to the final candidate commit/tree. Reproducing the historical
+native API generation below is optional, not a required release validation step.
+When checked source, build and API inputs are unchanged, applicable existing
+build/axiom/API evidence can be reused; documentation-only edits receive lightweight
+documentation and metadata checks. Source or pin changes require verification of
+the affected build, API and documentation bindings, with documentation or manifest
+updates where needed. Reuse remains appropriate for unaffected evidence; native
+API regeneration is an optional way to update affected documentation, not an
+automatic release prerequisite.
 
 When the analyzed development commit is available locally, its Git source objects
-are authoritative and every input must match. A parentless release checkout does
-not contain that development ancestry. Only when the selected full commit object
-is absent does the adapter instead require the release's committed manifest to
-equal the freshly reproduced manifest byte-for-byte, including all ten source/pin
-hashes, seven native-record hashes, module/public inventories, tool revision and
-output hash. Its source inputs must also equal the release's own committed files.
+are authoritative and every input must match. A release checkout can lack that
+development object whether or not it has parent history. Only when the selected
+full commit object is absent does the adapter instead require the release's
+committed manifest to equal the freshly reproduced manifest byte-for-byte,
+including all ten source/pin hashes, seven native-record hashes, module/public
+inventories, tool revision and output hash. Its source inputs must also equal
+the release's own committed files.
 A present wrong object, stale input, altered native record or uncommitted manifest
 is refused. This is source/output binding, not native-run attestation or a claim
-that the old development revision is available at GitHub.
+that the old development revision is available at GitHub. The manifest's
+`proof_certification: false` does not assert any proof or axiom verification.
 
 Build the unchanged native doc-gen4 tool at
 `97d4ecdfc8e09e7f511724c25e303d448de6a3db`, with its committed dependency manifest
@@ -67,9 +75,8 @@ not a general Lean parser, native-output attestation, proof checker or release
 certificate; retained native command receipts and independent review are required.
 
 The adapter was adapted by Atlas from Anchor's original Formal Frontier
-ideal-completion contribution at `f0c8c34386109116e4912fb425a8ad15d9dc42a4`.
-That recipe was unreviewed when reused; no approval transfers with it. Collective
-credit and Apache-2.0 terms are preserved. Original library docstrings and generated
-mathematical signatures are covered by the library's provenance record. Lean,
-mathlib and doc-gen4 remain separately credited declared tools/dependencies; their
-implementation or external documentation is not copied into this reference.
+ideal-completion renderer recipe. Collective credit and Apache-2.0 terms are
+preserved. Original library docstrings and generated mathematical signatures
+are covered by the library's provenance record. Lean, mathlib and doc-gen4 remain
+separately credited declared tools/dependencies; their implementation or external
+documentation is not copied into this reference.

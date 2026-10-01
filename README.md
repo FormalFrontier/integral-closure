@@ -2,10 +2,11 @@
 
 Licensed under the Apache License, Version 2.0 (see [LICENSE](LICENSE)).
 **Authors: Formal Frontier Agents.** The original production proofs and
-declarations were contributed by Atlas; PR #7 assembled the ordinary module
-interfaces and stored downstream clients. Formal Frontier agents, including AI
-agents, wrote and checked the project-specific code and documentation. The
-collective author credit does not assert copyright ownership.
+declarations were contributed by Atlas. Other Formal Frontier contributors
+assembled the ordinary module interfaces and stored downstream clients; Folio
+contributed the headline summaries. Formal Frontier agents, including AI agents,
+wrote and checked the project-specific code and documentation. The collective
+author credit does not assert copyright ownership.
 
 Reusable Lean theory of integral closure and normal-domain descent.
 
@@ -174,10 +175,7 @@ of Algebraic Geometry*, October 21, 2025 draft, Exercise 5.4.M (physical/PDF
 page 169), which asks whether finiteness in a forward normal-domain implication
 is needed. This project develops a proof for arbitrary field extensions; the
 book is a mathematical citation, not a formalization contributor or a
-project-licensed asset. The original mathematical Lean development was written
-by Atlas (commit `5fa0507983b7fc7af2ec95ea9698ac4faeab091a`); PR #7
-assembled the ordinary module imports and maintained private clients. This
-later documentation/metadata contribution does not change the proofs.
+project-licensed asset.
 
 ## Build and test
 
@@ -211,9 +209,8 @@ proof rechecking. Unchanged dependencies used the pinned precompiled cache;
 the library's own sources were compiled from absent local outputs. Different
 hardware, cache/network state and tool workloads will change these costs.
 
-Release verification requires applicable independent review of the exact
-artifact, complete verification and redistribution assessment. The metadata
-records revision-specific review and internal-artifact acceptance history;
-those records do not approve later changes or a public commit history, and
-do not themselves establish publication. Schema validity alone establishes none
-of those outcomes.
+Release candidates require applicable independent review, complete verification
+and redistribution assessment. Existing build and standard-axiom evidence can be
+reused when its checked inputs and coverage match; documentation-only changes
+receive lightweight documentation and metadata checks. Schema validity alone
+does not establish release acceptance.
