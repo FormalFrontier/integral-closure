@@ -199,7 +199,7 @@ The project uses Lean `v4.34.0-rc2` and mathlib
 
 ### Initial build baseline
 
-In a Linux Hive container with a 23 GiB memory limit and two Lean threads,
+In a Linux container with a 23 GiB memory limit and two Lean threads,
 the seven sequential clean library/example module builds took 35.3 seconds in
 total after fetching the matching mathlib cache. The largest recorded child
 maximum resident set among cache/build/fresh-source commands was approximately
@@ -208,9 +208,3 @@ portable requirements. They exclude documentation-tool compilation and separate
 proof rechecking. Unchanged dependencies used the pinned precompiled cache;
 the library's own sources were compiled from absent local outputs. Different
 hardware, cache/network state and tool workloads will change these costs.
-
-Release candidates require applicable independent review, complete verification
-and redistribution assessment. Existing build and standard-axiom evidence can be
-reused when its checked inputs and coverage match; documentation-only changes
-receive lightweight documentation and metadata checks. Schema validity alone
-does not establish release acceptance.
