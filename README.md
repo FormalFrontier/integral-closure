@@ -75,6 +75,7 @@ import IntegralClosure.LinearRetract
 /-! # README example: descent along a linear retraction -/
 
 set_option warningAsError true
+set_option linter.privateModule false
 
 noncomputable section
 
@@ -113,6 +114,7 @@ import IntegralClosure
 /-! # README examples: arbitrary field scalar extension -/
 
 set_option warningAsError true
+set_option linter.privateModule false
 
 noncomputable section
 
@@ -195,7 +197,7 @@ exercise the public surface through ordinary imports rather than privileged
 same-file access.
 
 The project uses Lean `v4.34.0-rc2` and mathlib
-`e37d88a26f3791ed5a93daa1f949af1021b8d103`.
+`83abb3e776bdefcbc447a1e44d0debe4010039e5`.
 
 ### Initial build baseline
 

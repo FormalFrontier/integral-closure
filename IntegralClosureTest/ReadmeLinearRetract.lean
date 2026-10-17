@@ -9,6 +9,7 @@ import IntegralClosure.LinearRetract
 /-! # README example: descent along a linear retraction -/
 
 set_option warningAsError true
+set_option linter.privateModule false
 
 noncomputable section
 

@@ -16,6 +16,7 @@ avoid dimension, algebraicity, separability and multiplicativity assumptions.
 -/
 
 set_option warningAsError true
+set_option linter.privateModule false
 
 noncomputable section
 

@@ -9,6 +9,7 @@ import IntegralClosure
 /-! # README examples: arbitrary field scalar extension -/
 
 set_option warningAsError true
+set_option linter.privateModule false
 
 noncomputable section
 

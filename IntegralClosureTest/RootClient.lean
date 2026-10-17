@@ -14,6 +14,7 @@ mathematical interfaces. The field extension is arbitrary.
 -/
 
 set_option warningAsError true
+set_option linter.privateModule false
 
 noncomputable section
 
