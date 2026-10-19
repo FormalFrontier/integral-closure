@@ -21,4 +21,5 @@ name = "IntegralClosure"
 [[lean_lib]]
 name = "IntegralClosureTest"
 roots = ["IntegralClosureTest.LeafClient", "IntegralClosureTest.RootClient",
-         "IntegralClosureTest.ReadmeLinearRetract", "IntegralClosureTest.ReadmeTensorProduct"]
+         "IntegralClosureTest.ReadmeLinearRetract", "IntegralClosureTest.ReadmeTensorProduct",
+         "IntegralClosureTest.Jacobson"]

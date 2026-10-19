@@ -47,9 +47,28 @@ Import [`IntegralClosure`](IntegralClosure.lean) for both criteria, or import
 The [API and examples below](#public-api-and-examples) give the complete
 signatures, usage and proof explanations.
 
+### Jacobson radicals under integral homomorphisms
+
+For arbitrary commutative rings `R` and `S` in independent universes and an
+integral ring homomorphism `f : R →+* S`,
+[`IntegralClosure.Jacobson`](IntegralClosure/Jacobson.lean) provides:
+
+- `Ideal.comap_jacobson_of_isIntegral`: for every target ideal `J : Ideal S`,
+  `J.jacobson.comap f = (J.comap f).jacobson`.
+- `Ideal.map_jacobson_le_of_isIntegral`: for every source ideal `I : Ideal R`,
+  `I.jacobson.map f ≤ (I.map f).jacobson`.
+- `Ideal.map_le_jacobson_bot_of_isIntegral`: for every source ideal `I`,
+  `I ≤ (⊥ : Ideal R).jacobson` implies
+  `I.map f ≤ (⊥ : Ideal S).jacobson`.
+
+No injectivity, surjectivity or nontriviality assumption is required.
+Mathlib's surjective Jacobson formula also applies to possibly noncommutative
+rings; the integral formula here assumes commutativity.
+
 ## Public API and examples
 
-The [generated API reference](docs/API.md) includes all five public declarations,
+The [generated API reference](docs/API.md) includes all five descent and evaluation
+declarations,
 their complete native display signatures and module documentation. Its
 [generation manifest](docs/api-manifest.json) binds the analyzed source and pins;
 [reproduction instructions](docs/README.md) describe the separate pinned tool.
@@ -91,7 +110,8 @@ private theorem readme_linearRetract
 ```
 
 Import `IntegralClosure.TensorProduct` for the four names in
-`Algebra.TensorProduct` below, or `IntegralClosure` for all five public names.
+`Algebra.TensorProduct` below, or `IntegralClosure` for all five descent and
+evaluation names.
 For fields `k`, `l`, a field extension `Algebra k l` and a commutative `k`-algebra
 `A` (with three independent universes):
 
@@ -199,14 +219,3 @@ same-file access.
 The project uses Lean `v4.34.0-rc2` and mathlib
 `83abb3e776bdefcbc447a1e44d0debe4010039e5`.
 
-### Initial build baseline
-
-In a Linux container with a 23 GiB memory limit and two Lean threads,
-the seven sequential clean library/example module builds took 35.3 seconds in
-total after fetching the matching mathlib cache. The largest recorded child
-maximum resident set among cache/build/fresh-source commands was approximately
-1.37 GiB. These are observed command measurements, not total container peaks or
-portable requirements. They exclude documentation-tool compilation and separate
-proof rechecking. Unchanged dependencies used the pinned precompiled cache;
-the library's own sources were compiled from absent local outputs. Different
-hardware, cache/network state and tool workloads will change these costs.

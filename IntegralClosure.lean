@@ -6,6 +6,7 @@ module
 
 public import IntegralClosure.LinearRetract
 public import IntegralClosure.TensorProduct
+public import IntegralClosure.Jacobson
 
 /-!
 # Integral closure and field scalar extension

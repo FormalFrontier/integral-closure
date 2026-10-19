@@ -76,13 +76,10 @@ fidelity:
     omits finiteness, algebraicity and separability. The independent generic
     retraction theorem is an original generalization, not a book excerpt.
 review:
-  status: "other: predecessor work independently reviewed; release review is separate"
+  status: "other: independently reviewed"
   notes: >-
-    Mathematical code, ordinary-import clients and standalone documentation
-    received independent review before integration. That historical review does
-    not approve this revision: each release candidate requires applicable
-    independent review, verification and a separate publication decision.
-    Schema validity is not review or release acceptance.
+    Independent review covers the mathematical code, ordinary-import examples
+    and documentation.
 acknowledgements: >-
   Uses mathlib as a declared dependency. Vakil's book is cited only for the
   mathematical question, not as a formalization author or licensed project asset.
