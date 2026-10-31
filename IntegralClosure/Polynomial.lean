@@ -37,4 +37,19 @@ theorem eval₂_comp_X_pow
     eval₂ f x (expand R n p) = eval₂ f (x ^ n) p := by
   rw [expand_eq_comp_X_pow, eval₂_comp_X_pow]
 
+/-- Every left multiple of a polynomial vanishing under evaluation also vanishes. -/
+theorem eval₂_mul_eq_zero_of_right'
+    {R : Type u} {S : Type v} [Semiring R] [Semiring S]
+    (f : R →+* S) (x : S) (p : R[X]) {q : R[X]}
+    (hq : q.eval₂ f x = 0) : (p * q).eval₂ f x = 0 := by
+  induction p using Polynomial.induction_on with
+  | C a =>
+      simpa only [eval₂_eq_eval_map, Polynomial.map_mul, map_C,
+        eval_C_mul, mul_zero] using congrArg (fun y => f a * y) hq
+  | add p₁ p₂ h₁ h₂ =>
+      rw [add_mul, eval₂_add, h₁, h₂, add_zero]
+  | monomial n a ih =>
+      rw [pow_succ, ← mul_assoc, mul_assoc, X_mul, ← mul_assoc,
+        eval₂_mul_X, ih, zero_mul]
+
 end Polynomial

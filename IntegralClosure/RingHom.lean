@@ -4,10 +4,16 @@ Authors: Formal Frontier Agents
 -/
 module
 
+import Mathlib.RingTheory.AdjoinRoot
+
 public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
 public import IntegralClosure.Polynomial
 import Mathlib.Algebra.Polynomial.Monic
 import Mathlib.Algebra.Polynomial.Eval.Defs
+
+/-!
+# Power criteria for relative integrality
+-/
 
 @[expose] public section
 
@@ -34,5 +40,30 @@ theorem IsIntegralElem.of_pow
   obtain ⟨p, hp, hpx⟩ := hx
   refine ⟨Polynomial.expand R n p, (Polynomial.monic_expand_iff hn).2 hp, ?_⟩
   rw [Polynomial.eval₂_expand, hpx]
+
+/-- Every natural power of an integral element is integral. -/
+theorem IsIntegralElem.pow
+    {R : Type u} {S : Type v} [CommRing R] [Ring S]
+    {f : R →+* S} {x : S} (hx : f.IsIntegralElem x) (n : ℕ) :
+    f.IsIntegralElem (x ^ n) := by
+  obtain ⟨p, hp, hpx⟩ := hx
+  obtain ⟨q, hq, hqroot⟩ := IsIntegral.pow (AdjoinRoot.isIntegral_root' hp) n
+  have hdiv : p ∣ q.comp (Polynomial.X ^ n) := by
+    apply AdjoinRoot.mk_eq_zero.mp
+    rw [← AdjoinRoot.aeval_eq]
+    exact (Polynomial.eval₂_comp_X_pow (algebraMap R (AdjoinRoot p))
+      (AdjoinRoot.root p) n q).trans hqroot
+  rcases hdiv with ⟨r, hr⟩
+  refine ⟨q, hq, ?_⟩
+  rw [← Polynomial.eval₂_comp_X_pow f x n q, hr, mul_comm]
+  exact Polynomial.eval₂_mul_eq_zero_of_right' f x r hpx
+
+/-- Integrality is unchanged by taking a positive power. -/
+@[simp]
+theorem IsIntegralElem.pow_iff
+    {R : Type u} {S : Type v} [CommRing R] [Ring S]
+    {f : R →+* S} {x : S} {n : ℕ} (hn : 0 < n) :
+    f.IsIntegralElem (x ^ n) ↔ f.IsIntegralElem x := by
+  exact ⟨IsIntegralElem.of_pow hn, fun hx => IsIntegralElem.pow hx n⟩
 
 end RingHom
