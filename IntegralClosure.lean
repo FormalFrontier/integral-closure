@@ -8,6 +8,8 @@ public import IntegralClosure.LinearRetract
 public import IntegralClosure.TensorProduct
 public import IntegralClosure.Jacobson
 
+public import IntegralClosure.RingHom
+
 /-!
 # Integral closure and field scalar extension
 
