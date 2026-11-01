@@ -12,15 +12,21 @@ Reusable Lean theory of integral closure and normal-domain descent.
 
 ## Headline results
 
-- **Finiteness over power-containing subalgebras.** For commutative rings `R`
-  and `A` with the given `R`-algebra structure, assume `A` is finite type over
-  `R`. If `C : Subalgebra R A` contains a positive power of every element of
-  `A`, then the original `A` is finite as a module over `C` via the canonical
-  inclusion action. The exponent may depend on the element; no field,
-  Noetherianity, or finite-type assumption on `C` over `R` is needed.
-  [`Subalgebra.finite_of_forall_exists_pow_mem`](IntegralClosure/Subalgebra.lean)
-  combines the existing power-integrality criterion with finite-type
-  restriction of scalars and integral finiteness.
+- **Finiteness from powers of algebra generators.** Let `R` and `A` be
+  commutative semirings with the given `R`-algebra structure. If a finite set
+  generates `A` as an `R`-algebra and `C : Subalgebra R A` contains a positive
+  power of each chosen generator, then the original `A` is finite as a module
+  over `C` through the canonical inclusion action. Exponents may vary with the
+  generator; no field, Noetherianity, finite type of `C/R`, or ring structure
+  is assumed. The theorem
+  [`Subalgebra.finite_of_adjoin_eq_top_of_forall_exists_pow_mem`](IntegralClosure/Subalgebra.lean)
+  uses bounded power spans and finite products of adjoining subalgebras.
+  Its finite-type, all-elements corollary is
+  [`Subalgebra.finite_of_forall_exists_pow_mem`](IntegralClosure/Subalgebra.lean).
+  The generator-only criterion applies to `ℕ[X²] ⊊ ℕ[X]`, with generator `X`
+  and exponent `2`, where `1,X` span over `ℕ[X²]`. The all-elements condition
+  fails in this example: the `X`-coefficient of `(1+X)^n` is `n` for every
+  positive `n`. In general the bounded monomials span; they need not be a basis.
 - **Integral closedness descends along a linear retraction.** For commutative
   rings `A` and `B`, an injective algebra map `A → B` into an integrally closed
   domain, together with an `A`-linear left inverse `B →ₗ[A] A`, gives integral
