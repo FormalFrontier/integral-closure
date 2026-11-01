@@ -35,9 +35,18 @@ Reusable Lean theory of integral closure and normal-domain descent.
   proves it is a left inverse to `includeLeft`. Normalization is needed for
   this retraction equation, not for constructing the evaluation map; the
   functional and evaluation map need not be multiplicative.
+- **Monic relations at inverses of units.** For a division semiring `R`, a
+  semiring `S`, an arbitrary unital homomorphism `f : R →+* S` and a unit
+  `a : Sˣ`, any nonzero polynomial relation over `R` at `a` yields a monic
+  polynomial relation at `a⁻¹`. The results in
+  [`IntegralClosure.Polynomial`](IntegralClosure/Polynomial.lean) require no
+  coefficient centrality or commutativity of `S`. The more general semiring-source
+  theorem assumes that the reversed polynomial's leading coefficient is a unit
+  in `R`, without requiring the original polynomial to be nonzero.
 
-These five public declarations build on mathlib's integral-closure, fraction-ring,
-tensor-product and projective-module duality infrastructure. They establish
+The five descent and tensor-evaluation declarations build on mathlib's
+integral-closure, fraction-ring, tensor-product and projective-module duality
+infrastructure. They establish
 descent, not ascent, a converse or normalization. The descent theorems return
 typeclass proofs for local use rather than installing global instances; the
 tensor evaluation construction is noncomputable.
