@@ -10,6 +10,7 @@ public import IntegralClosure.Jacobson
 
 public import IntegralClosure.RingHom
 public import IntegralClosure.Subalgebra
+public import IntegralClosure.Spectrum
 
 /-!
 # Integral closure and field scalar extension
@@ -20,7 +21,8 @@ one construction is needed. `IsIntegrallyClosed.of_linearRetract` takes an
 injective algebra map and an A-linear left inverse; the tensor-product leaf
 supplies `rightLinearMap`, its `includeLeft` retraction equation, and separate
 domain and integral-closure descent theorems. The theorems do not install global
-instances; their resulting typeclass proofs can be used locally.
+instances; their resulting typeclass proofs can be used locally. The root also
+re-exports power criteria for integrality, finiteness and prime-spectrum injectivity.
 -/
 
 set_option warningAsError true

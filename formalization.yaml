@@ -3,7 +3,8 @@ project:
   name: integral-closure
   description: >-
     Integral-closure descent along linear retractions and normal-domain descent
-    from arbitrary field scalar extensions of commutative algebras.
+    from arbitrary field scalar extensions of commutative algebras, with power
+    criteria for integrality, finiteness and prime-spectrum injectivity.
   authors:
     - Formal Frontier Agents
   license: Apache-2.0
@@ -42,7 +43,9 @@ status:
     An A-linear retraction of an injective algebra map into an integrally closed
     domain descends integral closedness; domain and integral-closure descent from
     an arbitrary field extension are separate results. No ascent, converse,
-    normalization or whole-source formalization is claimed.
+    normalization or whole-source formalization is claimed. For a homomorphism
+    of commutative semirings, positive powers in its image give injectivity on
+    prime spectra, without requiring the homomorphism to be surjective.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -50,6 +53,9 @@ status:
     - Classical.choice
     - Quot.sound
   main_results:
+    - declaration: PrimeSpectrum.comap_injective_of_forall_pow_mem_range
+      file: IntegralClosure/Spectrum.lean
+      sorry_count: 0
     - declaration: IsIntegrallyClosed.of_linearRetract
       file: IntegralClosure/LinearRetract.lean
       sorry_count: 0
