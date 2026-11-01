@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 public import Mathlib.RingTheory.Spectrum.Prime.RingHom
+public import IntegralClosure.Ideal
 
 /-!
 # Prime-spectrum injectivity from powers in the image
@@ -16,14 +17,15 @@ criteria for integrality and finiteness; the proof needs no ring structure or
 integrality hypothesis.
 
 The result generalizes Mathlib's `PrimeSpectrum.comap_injective_of_surjective`.
-It uses Mathlib's prime power-membership criterion to recover membership from
-contraction. Only injectivity of the original spectrum map is asserted, not
+It follows from contraction injectivity on radical ideals, since prime ideals are
+radical. Only injectivity of the original spectrum map is asserted, not
 surjectivity, a homeomorphism or universal injectivity.
 
 ## References
 
 - Mathlib's `PrimeSpectrum.comap_injective_of_surjective`
-- Mathlib's `Ideal.IsPrime.pow_mem_iff_mem`
+- `Ideal.comap_injOn_isRadical_of_forall_pow_mem_range`
+- Mathlib's `Ideal.IsPrime.isRadical`
 -/
 
 @[expose] public section
@@ -43,15 +45,8 @@ theorem comap_injective_of_forall_pow_mem_range
     Function.Injective (comap f) := by
   intro P Q h
   apply PrimeSpectrum.ext
-  apply Ideal.ext
-  intro b
-  obtain ⟨n, hn, a, ha⟩ := hpow b
-  calc
-    b ∈ P.asIdeal ↔ b ^ n ∈ P.asIdeal := (P.isPrime.pow_mem_iff_mem n hn).symm
-    _ ↔ b ^ n ∈ Q.asIdeal := by
-      have hmem : a ∈ (comap f P).asIdeal ↔ a ∈ (comap f Q).asIdeal := by
-        rw [h]
-      simpa only [comap_asIdeal, Ideal.mem_comap, ha] using hmem
-    _ ↔ b ∈ Q.asIdeal := Q.isPrime.pow_mem_iff_mem n hn
+  exact Ideal.comap_injOn_isRadical_of_forall_pow_mem_range f hpow
+    P.isPrime.isRadical Q.isPrime.isRadical
+    (by simpa only [comap_asIdeal] using congrArg PrimeSpectrum.asIdeal h)
 
 end PrimeSpectrum

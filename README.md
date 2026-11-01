@@ -12,6 +12,8 @@ Reusable Lean theory of integral closure and normal-domain descent.
 
 ## Headline results
 
+For a homomorphism `f : A →+* B` from a possibly noncommutative semiring `A` to a commutative semiring `B`, the [ideal API](IntegralClosure/Ideal.lean) shows that positive powers of each target generator in the image of `f` suffice to identify the radicals of the generated ideal and the extension of its contraction. The exponent may vary with the generator. Under the global power-image hypothesis, contraction is injective on radical ideals of `B`; the existing prime-spectrum injectivity criterion follows because prime ideals are radical.
+
 - **Finiteness from powers of algebra generators.** Let `R` and `A` be
   commutative semirings with the given `R`-algebra structure. If a finite set
   generates `A` as an `R`-algebra and `C : Subalgebra R A` contains a positive
