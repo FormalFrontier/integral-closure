@@ -9,6 +9,7 @@ public import IntegralClosure.TensorProduct
 public import IntegralClosure.Jacobson
 
 public import IntegralClosure.RingHom
+public import IntegralClosure.Subalgebra
 
 /-!
 # Integral closure and field scalar extension

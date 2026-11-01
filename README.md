@@ -12,6 +12,15 @@ Reusable Lean theory of integral closure and normal-domain descent.
 
 ## Headline results
 
+- **Finiteness over power-containing subalgebras.** For commutative rings `R`
+  and `A` with the given `R`-algebra structure, assume `A` is finite type over
+  `R`. If `C : Subalgebra R A` contains a positive power of every element of
+  `A`, then the original `A` is finite as a module over `C` via the canonical
+  inclusion action. The exponent may depend on the element; no field,
+  Noetherianity, or finite-type assumption on `C` over `R` is needed.
+  [`Subalgebra.finite_of_forall_exists_pow_mem`](IntegralClosure/Subalgebra.lean)
+  combines the existing power-integrality criterion with finite-type
+  restriction of scalars and integral finiteness.
 - **Integral closedness descends along a linear retraction.** For commutative
   rings `A` and `B`, an injective algebra map `A → B` into an integrally closed
   domain, together with an `A`-linear left inverse `B →ₗ[A] A`, gives integral
