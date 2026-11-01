@@ -1,14 +1,27 @@
-# Generated API reference
+# Historical native descent API snapshot
 
-Complete public API of integral-closure: five declarations in two mathematical leaves.
-Import `IntegralClosure` for both leaves. Four test modules contain private checked
-clients and README examples, not additional public API.
+This snapshot covers the five descent/evaluation declarations in
+`IntegralClosure.LinearRetract` and `IntegralClosure.TensorProduct`, the aggregate
+root, and four private test/example modules. Its recorded analysis revision is
+`ae76530b1ba4d38d1dafef90a68f2fb0cce64157`; it is **not the complete current public
+API**. Import `IntegralClosure` for the public root or either descent leaf directly.
 
-Signatures below are native doc-gen4 display signatures with all displayed implicit
-arguments retained, not declarations with proof bodies. Short names use the source
-namespace and imports; universe parameters are arbitrary. Module documentation
-is extracted verbatim from the exact source. All source links are relative to this
-checkout. See [generation and provenance](README.md), [exact input manifest](api-manifest.json)
+For current power criteria and polynomial helpers, see the
+[manual guide](README.md#relative-integrality-and-power-criteria), including
+[power-containing subalgebras](README.md#finiteness-over-power-containing-subalgebras)
+and [unit relations](README.md#unit-relations-under-raw-polynomial-evaluation).
+For Jacobson radicals see the
+[overview](../README.md#jacobson-radicals-under-integral-homomorphisms)
+and [current module](../IntegralClosure/Jacobson.lean).
+
+Signatures below are retained native doc-gen4 display signatures with all displayed
+implicit arguments, not declarations with proof bodies. Short names use the source
+namespace and imports; universe parameters are arbitrary. The module documentation
+below is retained verbatim from the analyzed source. Source links are relative to
+this checkout. The unchanged [input manifest](api-manifest.json) records the old
+analysis and original output hash: those bindings do **not** cover this edited
+introduction, the current manual guide, or the additional `Jacobson`, `RingHom`,
+`Subalgebra` and `Polynomial` modules. See [historical reproduction and provenance](README.md#historical-native-snapshot)
 and the [mathematical overview](../README.md).
 
 ## Module `IntegralClosure.LinearRetract`

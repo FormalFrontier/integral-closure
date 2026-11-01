@@ -1,14 +1,14 @@
 # integral-closure
 
 Licensed under the Apache License, Version 2.0 (see [LICENSE](LICENSE)).
-**Authors: Formal Frontier Agents.** The original production proofs and
-declarations were contributed by Atlas. Other Formal Frontier contributors
-assembled the ordinary module interfaces and stored downstream clients; Folio
-contributed the headline summaries. Formal Frontier agents, including AI agents,
-wrote and checked the project-specific code and documentation. The collective
-author credit does not assert copyright ownership.
+**Authors: Formal Frontier Agents.** The initial descent proofs and declarations,
+later mathematical proofs and module interfaces, stored downstream clients, and
+headline documentation are distinct contributions. Formal Frontier agents,
+including AI agents, wrote and checked the project-specific code and
+documentation. The collective author credit does not assert copyright ownership.
 
-Reusable Lean theory of integral closure and normal-domain descent.
+Reusable Lean theory of integral closure, relative integrality and normal-domain
+descent.
 
 ## Headline results
 
@@ -22,6 +22,17 @@ Reusable Lean theory of integral closure and normal-domain descent.
 
 For a homomorphism `f : A →+* B` from a possibly noncommutative semiring `A` to a commutative semiring `B`, the [ideal API](IntegralClosure/Ideal.lean) shows that positive powers of each target generator in the image of `f` suffice to identify the radicals of the generated ideal and the extension of its contraction. The exponent may vary with the generator. Under the global power-image hypothesis, contraction is injective on radical ideals of `B`; the existing prime-spectrum injectivity criterion follows because prime ideals are radical.
 
+- **Integrality reflects along nil kernels.** Let `K` be a commutative ring,
+  let `A` and `B` be possibly noncommutative rings with their given `K`-algebra
+  structures, and let `f : A →ₐ[K] B`. If every element killed by `f` is
+  nilpotent, then integrality over `K` of `f a` implies integrality of `a`.
+  The rings may lie in three independent universes; neither injectivity nor
+  surjectivity of `f`, nor a uniform nilpotence exponent for its kernel,
+  is required. The elementwise theorem
+  `IsIntegral.of_isNilpotent_of_map_eq_zero` and its whole-algebra counterpart
+  `Algebra.IsIntegral.of_isNilpotent_of_map_eq_zero` are in
+  [`IntegralClosure.RingHom`](IntegralClosure/RingHom.lean). The latter reflects
+  integrality of `B/K` to `A/K`; it does not require module finiteness.
 - **Finiteness from powers of algebra generators.** Let `R` and `A` be
   commutative semirings with the given `R`-algebra structure. If a finite set
   generates `A` as an `R`-algebra and `C : Subalgebra R A` contains a positive
@@ -30,7 +41,8 @@ For a homomorphism `f : A →+* B` from a possibly noncommutative semiring `A` t
   generator; no field, Noetherianity, finite type of `C/R`, or ring structure
   is assumed. The theorem
   [`Subalgebra.finite_of_adjoin_eq_top_of_forall_exists_pow_mem`](IntegralClosure/Subalgebra.lean)
-  uses bounded power spans and finite products of adjoining subalgebras.
+  bounds powers in each singleton adjoin and multiplies the resulting
+  `C`-submodule spans.
   Its finite-type, all-elements corollary is
   [`Subalgebra.finite_of_forall_exists_pow_mem`](IntegralClosure/Subalgebra.lean).
   The generator-only criterion applies to `ℕ[X²] ⊊ ℕ[X]`, with generator `X`
@@ -110,10 +122,44 @@ descent, not ascent, a converse or normalization. The descent theorems return
 typeclass proofs for local use rather than installing global instances; the
 tensor evaluation construction is noncomputable.
 
-Import [`IntegralClosure`](IntegralClosure.lean) for both criteria, or import
-`IntegralClosure.LinearRetract` and `IntegralClosure.TensorProduct` directly.
-The [API and examples below](#public-api-and-examples) give the complete
-signatures, usage and proof explanations.
+The reciprocal-evaluation lemmas generalize mathlib's commutative-target
+identities using its polynomial-reversal and finite-sum APIs. Unit descent
+refines its `RingHom.IsIntegral.isLocalHom` argument
+and uses [Group Theory](https://github.com/FormalFrontier/group-theory)'s
+zero-sum unit-transfer API. Subalgebra finiteness uses mathlib's adjoin-span
+and adjoin-union formulas and finite generation of submodule products.
+
+Import [`IntegralClosure`](IntegralClosure.lean) for all these families; the two
+descent leaves are `IntegralClosure.LinearRetract` and
+`IntegralClosure.TensorProduct`. The [API and examples below](#public-api-and-examples)
+give the complete descent signatures, usage and proof explanations; the
+[manual guide](docs/README.md) also covers power criteria and unit relations.
+
+### Relative integrality and positive-power criteria
+
+Let `R` be a commutative ring, `S` a possibly noncommutative ring, and
+`f : R →+* S` a ring homomorphism; the rings may lie in independent universes.
+An element `x : S` is integral relative to `f` (`f.IsIntegralElem x`) if some
+monic polynomial `p : R[X]` satisfies `p.eval₂ f x = 0`.
+
+- **Integrality is unchanged by positive powers.**
+  [`RingHom.IsIntegralElem.pow`](IntegralClosure/RingHom.lean) shows that
+  every natural power of an integral element is integral, including exponent
+  zero. Conversely,
+  [`of_pow`](IntegralClosure/RingHom.lean) and the simp lemma
+  [`pow_iff`](IntegralClosure/RingHom.lean) require `0 < n`: integrality of
+  `x ^ n` then implies, and is equivalent to, integrality of `x`.
+- **Positive powers in the range imply an integral homomorphism.**
+  [`RingHom.isIntegral_of_forall_pow_mem_range`](IntegralClosure/RingHom.lean)
+  proves `f.IsIntegral` if each `x : S` has some positive power in `Set.range f`.
+  Each element may have its own exponent; neither a uniform exponent nor
+  surjectivity is required.
+
+These criteria require no `Algebra` structure, centrality of coefficient images,
+domain, nontriviality or finiteness hypothesis. Import `IntegralClosure.RingHom`
+or the root `IntegralClosure`; the
+[manual reference](docs/README.md#relative-integrality-and-power-criteria)
+explains the arguments and the supporting polynomial evaluation lemmas.
 
 ### Jacobson radicals under integral homomorphisms
 
@@ -135,11 +181,16 @@ rings; the integral formula here assumes commutativity.
 
 ## Public API and examples
 
-The [generated API reference](docs/API.md) includes all five descent and evaluation
-declarations,
-their complete native display signatures and module documentation. Its
-[generation manifest](docs/api-manifest.json) binds the analyzed source and pins;
-[reproduction instructions](docs/README.md) describe the separate pinned tool.
+The [generated descent API snapshot](docs/API.md) retains the five descent and
+evaluation declarations, their native display signatures and module documentation.
+Its [generation manifest](docs/api-manifest.json) records the historical analysis,
+not the current full API or these edited guides. The
+[documentation guide](docs/README.md) gives current manual entry points for
+relative integrality, power-containing subalgebras and unit-polynomial relations,
+links the Jacobson module, and separates these from the historical reproduction
+recipe.
+
+### Linear-retraction and scalar-extension descent
 
 Import `IntegralClosure.LinearRetract` for
 `IsIntegrallyClosed.of_linearRetract`. For commutative rings `A` and `B` in
@@ -259,7 +310,7 @@ Their named private declarations are built by the default test target and are
 included in the compiled-artifact proof audit; no anonymous proof example is
 discarded after elaboration.
 
-These results are independent of the organization of any motivating source.
+The descent results are independent of the organization of any motivating source.
 Their mathematical motivation includes Ravi Vakil, *The Rising Sea: Foundations
 of Algebraic Geometry*, October 21, 2025 draft, Exercise 5.4.M (physical/PDF
 page 169), which asks whether finiteness in a forward normal-domain implication
