@@ -12,6 +12,14 @@ Reusable Lean theory of integral closure and normal-domain descent.
 
 ## Headline results
 
+- For a homomorphism `f : A →+* B` of commutative rings, if each target element
+  has a positive power in the image, contraction is an order isomorphism from
+  radical ideals of `B` to radical ideals of `A` containing `RingHom.ker f`.
+  Its inverse is extension followed by radical. For any integral homomorphism
+  of commutative rings and any source ideal `I`,
+  `Ideal.comap f (Ideal.map f I).radical = (I ⊔ RingHom.ker f).radical`.
+  See the [ideal extension and contraction API](IntegralClosure/Ideal.lean).
+
 For a homomorphism `f : A →+* B` from a possibly noncommutative semiring `A` to a commutative semiring `B`, the [ideal API](IntegralClosure/Ideal.lean) shows that positive powers of each target generator in the image of `f` suffice to identify the radicals of the generated ideal and the extension of its contraction. The exponent may vary with the generator. Under the global power-image hypothesis, contraction is injective on radical ideals of `B`; the existing prime-spectrum injectivity criterion follows because prime ideals are radical.
 
 - **Finiteness from powers of algebra generators.** Let `R` and `A` be
