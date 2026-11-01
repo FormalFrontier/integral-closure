@@ -29,7 +29,7 @@ name = "IntegralClosureTest"
 roots = ["IntegralClosureTest.LeafClient", "IntegralClosureTest.RootClient",
          "IntegralClosureTest.ReadmeLinearRetract", "IntegralClosureTest.ReadmeTensorProduct",
          "IntegralClosureTest.Jacobson", "IntegralClosureTest.PowerReflection",
-         "IntegralClosureTest.Spectrum"]
+         "IntegralClosureTest.Spectrum", "IntegralClosureTest.SpectrumTopology"]
 
 [lean_lib.leanOptions]
 weak.linter.privateModule = false

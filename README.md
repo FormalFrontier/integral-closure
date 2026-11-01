@@ -29,15 +29,24 @@ For a homomorphism `f : A →+* B` from a possibly noncommutative semiring `A` t
   and exponent `2`, where `1,X` span over `ℕ[X²]`. The all-elements condition
   fails in this example: the `X`-coefficient of `(1+X)^n` is `n` for every
   positive `n`. In general the bounded monomials span; they need not be a basis.
-- **Prime-spectrum injectivity from powers in the image.** For commutative
+- **Prime-spectrum embeddings from powers in the image.** For commutative
   semirings `A` and `B` in independent universes and a homomorphism `f : A →+* B`,
   if every `b : B` has a positive natural power in `Set.range f`, then
-  `PrimeSpectrum.comap f` is injective. The exponent may depend on `b`; neither
-  injectivity nor surjectivity of `f` is assumed. The theorem
-  [`PrimeSpectrum.comap_injective_of_forall_pow_mem_range`](IntegralClosure/Spectrum.lean)
-  generalizes Mathlib's surjective criterion using its prime power-membership API.
-  It asserts injectivity only, not surjectivity, a homeomorphism or universal
-  injectivity of the spectrum map.
+  `PrimeSpectrum.comap f` is a topological embedding. The exponent may depend on
+  `b`; neither injectivity nor surjectivity of `f` is assumed. The theorem
+  [`PrimeSpectrum.isEmbedding_comap_of_forall_pow_mem_range`](IntegralClosure/Spectrum/Topology.lean)
+  combines the inducing criterion
+  `PrimeSpectrum.comap_isInducing_of_forall_pow_mem_range` with the existing
+  [`PrimeSpectrum.comap_injective_of_forall_pow_mem_range`](IntegralClosure/Spectrum.lean).
+  Mathlib's basic-open basis and power identities give the induced topology.
+  This separates and generalizes the ring-free embedding component of
+  `PrimeSpectrum.isHomeomorph_comap`, formalized in Mathlib by Christian Merten
+  and Junyan Xu following the [Stacks Project, Tag 0BR8](https://stacks.math.columbia.edu/tag/0BR8).
+  Mathlib's stronger homeomorphism theorem additionally assumes commutative rings
+  and a kernel consisting of nilpotents. The surjective embedding criterion is
+  recovered with exponent one, but not every localization embedding satisfies the
+  premise. Over arbitrary commutative semirings this asserts no spectral
+  surjectivity, homeomorphism, universal injectivity or closed range.
 - **Integral closedness descends along a linear retraction.** For commutative
   rings `A` and `B`, an injective algebra map `A → B` into an integrally closed
   domain, together with an `A`-linear left inverse `B →ₗ[A] A`, gives integral

@@ -4,7 +4,7 @@ project:
   description: >-
     Integral-closure descent along linear retractions and normal-domain descent
     from arbitrary field scalar extensions of commutative algebras, with power
-    criteria for integrality, finiteness and prime-spectrum injectivity.
+    criteria for integrality, finiteness and prime-spectrum embeddings.
   authors:
     - Formal Frontier Agents
   license: Apache-2.0
@@ -44,8 +44,10 @@ status:
     domain descends integral closedness; domain and integral-closure descent from
     an arbitrary field extension are separate results. No ascent, converse,
     normalization or whole-source formalization is claimed. For a homomorphism
-    of commutative semirings, positive powers in its image give injectivity on
-    prime spectra, without requiring the homomorphism to be surjective.
+    of commutative semirings, positive powers in its image give a topological
+    embedding on prime spectra, without requiring the homomorphism to be
+    surjective. This extends the surjective criterion, not all localization
+    embeddings; no closed-range or spectral-surjectivity assertion is made.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -53,6 +55,12 @@ status:
     - Classical.choice
     - Quot.sound
   main_results:
+    - declaration: PrimeSpectrum.comap_isInducing_of_forall_pow_mem_range
+      file: IntegralClosure/Spectrum/Topology.lean
+      sorry_count: 0
+    - declaration: PrimeSpectrum.isEmbedding_comap_of_forall_pow_mem_range
+      file: IntegralClosure/Spectrum/Topology.lean
+      sorry_count: 0
     - declaration: PrimeSpectrum.comap_injective_of_forall_pow_mem_range
       file: IntegralClosure/Spectrum.lean
       sorry_count: 0

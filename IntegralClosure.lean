@@ -11,6 +11,7 @@ public import IntegralClosure.Jacobson
 public import IntegralClosure.RingHom
 public import IntegralClosure.Subalgebra
 public import IntegralClosure.Spectrum
+public import IntegralClosure.Spectrum.Topology
 
 /-!
 # Integral closure and field scalar extension
@@ -22,7 +23,7 @@ injective algebra map and an A-linear left inverse; the tensor-product leaf
 supplies `rightLinearMap`, its `includeLeft` retraction equation, and separate
 domain and integral-closure descent theorems. The theorems do not install global
 instances; their resulting typeclass proofs can be used locally. The root also
-re-exports power criteria for integrality, finiteness and prime-spectrum injectivity.
+re-exports power criteria for integrality, finiteness and prime-spectrum embeddings.
 -/
 
 set_option warningAsError true
