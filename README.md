@@ -51,6 +51,14 @@ Reusable Lean theory of integral closure and normal-domain descent.
   [`IntegralClosure.Polynomial`](IntegralClosure/Polynomial.lean) use left
   coefficients and require no coefficient centrality. The unit condition is
   in the source semiring, not merely after applying `f`.
+- **Units descend from a monic inverse relation.** For arbitrary semirings `R`
+  and `S`, an injective homomorphism `f : R →+* S`, `r : R` and a unit
+  `a : Sˣ` with `↑a = f r`, a monic polynomial relation over `R` at `a⁻¹`
+  implies `IsUnit r`. The theorem
+  `RingHom.isUnit_of_monic_eval₂_units_inv_eq_zero` in
+  [`IntegralClosure.RingHom`](IntegralClosure/RingHom.lean) needs neither
+  commutativity nor a second relation at `a`. Although stated with semiring
+  instances, its hypotheses force both semirings to admit ring structures.
 
 The five descent and tensor-evaluation declarations build on mathlib's
 integral-closure, fraction-ring, tensor-product and projective-module duality
