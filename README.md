@@ -43,6 +43,14 @@ Reusable Lean theory of integral closure and normal-domain descent.
   coefficient centrality or commutativity of `S`. The more general semiring-source
   theorem assumes that the reversed polynomial's leading coefficient is a unit
   in `R`, without requiring the original polynomial to be nonzero.
+- **A unit-constant criterion for two monic relations.** For arbitrary semirings
+  `R` and `S`, a unital homomorphism `f : R →+* S` and `a : Sˣ`, monic
+  polynomial relations at both `a` and `a⁻¹` exist exactly when a monic relation
+  at `a` has constant coefficient a unit in `R`. When both relations exist,
+  that constant coefficient can be chosen to be `1`. These results in
+  [`IntegralClosure.Polynomial`](IntegralClosure/Polynomial.lean) use left
+  coefficients and require no coefficient centrality. The unit condition is
+  in the source semiring, not merely after applying `f`.
 
 The five descent and tensor-evaluation declarations build on mathlib's
 integral-closure, fraction-ring, tensor-product and projective-module duality

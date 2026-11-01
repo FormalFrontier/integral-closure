@@ -122,7 +122,21 @@ theorem eval₂_reflect_mul_pow' (i : R →+* S) (x : S) [Invertible x]
         sum_over_range' p (f := fun k a => i a * x ^ k)
           (fun _ => by simp) (N + 1) (Nat.lt_succ_of_le hp)]
 
+/-- Reversing a polynomial and inverting the evaluation point preserves vanishing,
+without centrality of the coefficient images. -/
+@[simp] theorem eval₂_reverse_eq_zero_iff' (f : R →+* S) (x : S) [Invertible x]
+    (p : R[X]) : p.reverse.eval₂ f (⅟x) = 0 ↔ p.eval₂ f x = 0 := by
+  have h := eval₂_reflect_mul_pow' f x p.natDegree p le_rfl
+  change p.reverse.eval₂ f (⅟x) * x ^ p.natDegree = p.eval₂ f x at h
+  rw [← h, (isUnit_of_invertible (x ^ p.natDegree)).mul_left_eq_zero]
+
 end
+
+private theorem eval₂_reverse_eq_zero_iff'_eq
+    {R : Type u} {S : Type v} [Semiring R] [CommSemiring S]
+    (f : R →+* S) (x : S) [Invertible x] (p : R[X]) :
+    eval₂_reverse_eq_zero_iff' f x p = eval₂_reverse_eq_zero_iff f x p :=
+  Subsingleton.elim _ _
 
 /-- A polynomial relation at a unit gives a monic relation at its inverse if the
 leading coefficient of the reversed polynomial is a unit in the coefficient semiring. -/
@@ -132,19 +146,8 @@ theorem exists_monic_eval₂_units_inv_eq_zero_of_isUnit_reverse_leadingCoeff
     (hc : IsUnit p.reverse.leadingCoeff) (ha : p.eval₂ f (a : S) = 0) :
     ∃ q : R[X], q.Monic ∧ q.eval₂ f (↑(a⁻¹) : S) = 0 := by
   rcases hc with ⟨c, hc⟩
-  let : Invertible (a : S) :=
-    ⟨↑(a⁻¹), a.inv_val, a.val_inv⟩
   have hr : p.reverse.eval₂ f (↑(a⁻¹) : S) = 0 := by
-    have h := eval₂_reflect_mul_pow' f (a : S) p.natDegree p le_rfl
-    change p.reverse.eval₂ f (↑(a⁻¹) : S) * (a : S) ^ p.natDegree =
-      p.eval₂ f (a : S) at h
-    rw [ha] at h
-    have hi : (a : S) ^ p.natDegree *
-        (↑((a ^ p.natDegree)⁻¹) : S) = 1 :=
-      (a ^ p.natDegree).val_inv
-    have h' := congrArg
-      (fun z : S => z * (↑((a ^ p.natDegree)⁻¹) : S)) h
-    simpa only [mul_assoc, hi, mul_one, zero_mul] using h'
+    simpa only [invOf_units] using (eval₂_reverse_eq_zero_iff' f (a : S) p).mpr ha
   refine ⟨C (↑(c⁻¹) : R) * p.reverse, ?_, ?_⟩
   · apply monic_C_mul_of_mul_leadingCoeff_eq_one
     rw [← hc]
@@ -163,5 +166,60 @@ theorem exists_monic_eval₂_units_inv_eq_zero
     apply leadingCoeff_ne_zero.mpr
     exact fun h => hp (reverse_eq_zero.mp h)
   · exact ha
+
+/-- Monic relations at a unit and its inverse yield a monic relation at the unit
+whose constant coefficient is one in the coefficient semiring. -/
+theorem exists_monic_coeff_zero_eq_one_eval₂_units_eq_zero
+    {R : Type u} {S : Type v} [Semiring R] [Semiring S]
+    (f : R →+* S) (a : Sˣ) {p q : R[X]}
+    (hp : p.Monic) (ha : p.eval₂ f (a : S) = 0)
+    (hq : q.Monic) (hai : q.eval₂ f (↑(a⁻¹) : S) = 0) :
+    ∃ r : R[X], r.Monic ∧ r.coeff 0 = 1 ∧ r.eval₂ f (a : S) = 0 := by
+  rcases subsingleton_or_nontrivial R with hR | hR
+  · let _ := hR
+    exact ⟨0, monic_of_subsingleton _, Subsingleton.elim _ _, eval₂_zero f _⟩
+  · let _ := hR
+    let : Invertible (↑(a⁻¹) : S) := (a⁻¹).invertible
+    have hrev : q.reverse.eval₂ f (a : S) = 0 := by
+      simpa only [invOf_units, inv_inv] using
+        (eval₂_reverse_eq_zero_iff' f (↑(a⁻¹) : S) q).2 hai
+    have hmul (n : ℕ) : (p * X ^ n).eval₂ f (a : S) = 0 := by
+      induction n with
+      | zero => simpa only [pow_zero, mul_one] using ha
+      | succ n ih =>
+          rw [pow_succ, ← mul_assoc, eval₂_mul_X, ih, zero_mul]
+    let k := q.reverse.natDegree + 1
+    refine ⟨p * X ^ k + q.reverse, ?_, ?_, ?_⟩
+    · apply (hp.mul (monic_X_pow k)).add_of_left
+      apply degree_lt_degree
+      rw [natDegree_mul_X_pow k hp.ne_zero]
+      exact (Nat.lt_succ_self _).trans_le (Nat.le_add_left _ _)
+    · rw [coeff_add, mul_coeff_zero, coeff_X_pow, coeff_zero_reverse, hq]
+      simp [k]
+    · rw [eval₂_add, hmul k, hrev, add_zero]
+
+/-- A unit and its inverse both admit monic polynomial relations if and only if the
+unit admits a monic relation with a unit constant coefficient in the coefficient semiring. -/
+theorem exists_monic_eval₂_units_eq_zero_and_inv_iff
+    {R : Type u} {S : Type v} [Semiring R] [Semiring S]
+    (f : R →+* S) (a : Sˣ) :
+    ((∃ p : R[X], p.Monic ∧ p.eval₂ f (a : S) = 0) ∧
+      (∃ q : R[X], q.Monic ∧ q.eval₂ f (↑(a⁻¹) : S) = 0)) ↔
+    ∃ p : R[X], p.Monic ∧ IsUnit (p.coeff 0) ∧ p.eval₂ f (a : S) = 0 := by
+  constructor
+  · rintro ⟨⟨p, hp, ha⟩, ⟨q, hq, hai⟩⟩
+    obtain ⟨r, hr, hc, har⟩ :=
+      exists_monic_coeff_zero_eq_one_eval₂_units_eq_zero f a hp ha hq hai
+    refine ⟨r, hr, ?_, har⟩
+    rw [hc]
+    exact isUnit_one
+  · rintro ⟨p, hp, hc, ha⟩
+    have hreverse : IsUnit p.reverse.leadingCoeff := by
+      rcases subsingleton_or_nontrivial R with hR | hR
+      · exact isUnit_of_subsingleton _
+      · rw [reverse_leadingCoeff, trailingCoeff_eq_coeff_zero hc.ne_zero]
+        exact hc
+    exact ⟨⟨p, hp, ha⟩,
+      exists_monic_eval₂_units_inv_eq_zero_of_isUnit_reverse_leadingCoeff f a hreverse ha⟩
 
 end Polynomial
