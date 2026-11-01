@@ -10,6 +10,7 @@ import Mathlib.Algebra.Regular.Basic
 import Mathlib.RingTheory.AdjoinRoot
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Defs
 public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
 public import IntegralClosure.Polynomial
 import Mathlib.Algebra.Polynomial.Monic
@@ -22,10 +23,17 @@ Power criteria for relative integrality and unit descent from inverse polynomial
 The unit descent argument refines the reverse-polynomial argument in Mathlib's
 `RingHom.IsIntegral.isLocalHom`, using only a relation at the inverse of the given unit.
 
+Integrality also reflects along homomorphisms of algebras over a commutative base
+when each element of the kernel is nilpotent. The algebra rings may be
+noncommutative, and the nilpotence exponent may depend on the kernel element;
+no vanishing power of the kernel ideal is required.
+
 ## References
 
 - Mathlib's `RingHom.IsIntegral.isLocalHom`, for the reverse-polynomial argument.
 - `GroupTheory.Algebra.IsAddUnit`, for unit transfer across a zero-sum relation.
+- Mathlib's integrality definitions and injective-reflection lemmas
+  `isIntegral_algHom_iff` and `Algebra.IsIntegral.of_injective`.
 -/
 
 @[expose] public section
@@ -126,3 +134,61 @@ theorem IsIntegralElem.pow_iff
   exact ⟨IsIntegralElem.of_pow hn, fun hx => IsIntegralElem.pow hx n⟩
 
 end RingHom
+
+/-! ## Integrality reflection for homomorphisms of central algebras -/
+
+section CentralAlgebra
+
+universe w
+
+/-- Integrality reflects along an algebra homomorphism whose kernel elements are
+nilpotent. The source and target algebra rings need not be commutative, and the
+kernel need not be a nilpotent ideal. -/
+theorem IsIntegral.of_isNilpotent_of_map_eq_zero
+    {K : Type u} {A : Type v} {B : Type w}
+    [CommRing K] [Ring A] [Ring B] [Algebra K A] [Algebra K B]
+    (f : A →ₐ[K] B) (hker : ∀ x : A, f x = 0 → IsNilpotent x)
+    {a : A} (ha : IsIntegral K (f a)) : IsIntegral K a := by
+  obtain ⟨p, hp, hpa⟩ := ha
+  have hmap : f (Polynomial.aeval a p) = 0 := by
+    rw [← Polynomial.aeval_algHom_apply, Polynomial.aeval_def]
+    exact hpa
+  obtain ⟨n, hn⟩ := hker (Polynomial.aeval a p) hmap
+  refine ⟨p ^ n, hp.pow n, ?_⟩
+  rw [← Polynomial.aeval_def, map_pow, hn]
+
+/-- An algebra with a homomorphism to an integral algebra is integral if every
+element of the kernel is nilpotent. No uniform kernel-ideal exponent is assumed. -/
+theorem Algebra.IsIntegral.of_isNilpotent_of_map_eq_zero
+    {K : Type u} {A : Type v} {B : Type w}
+    [CommRing K] [Ring A] [Ring B] [Algebra K A] [Algebra K B]
+    (f : A →ₐ[K] B) (hker : ∀ x : A, f x = 0 → IsNilpotent x)
+    [Algebra.IsIntegral K B] : Algebra.IsIntegral K A := by
+  refine ⟨fun a => ?_⟩
+  exact _root_.IsIntegral.of_isNilpotent_of_map_eq_zero f hker
+    (Algebra.IsIntegral.isIntegral (f a))
+
+/-- Injective reflection is the specialization with trivial kernel. -/
+private theorem Algebra.IsIntegral.of_injective_via_nil_kernel
+    {K : Type u} {A : Type v} {B : Type w}
+    [CommRing K] [Ring A] [Ring B] [Algebra K A] [Algebra K B]
+    (f : A →ₐ[K] B) (hf : Function.Injective f)
+    [Algebra.IsIntegral K B] : Algebra.IsIntegral K A := by
+  apply Algebra.IsIntegral.of_isNilpotent_of_map_eq_zero f
+  intro x hx
+  have hx0 : x = 0 := hf (hx.trans (map_zero f).symm)
+  exact ⟨1, by simpa only [pow_one] using hx0⟩
+
+/-- A finite-type source with nil kernel is finite when the target is finite. -/
+private theorem Module.Finite.of_finiteType_of_nil_kernel
+    {K : Type u} {A : Type v} {B : Type w}
+    [CommRing K] [CommRing A] [Ring B] [Algebra K A] [Algebra K B]
+    [Algebra.FiniteType K A] [Module.Finite K B]
+    (f : A →ₐ[K] B) (hker : ∀ x : A, f x = 0 → IsNilpotent x) :
+    Module.Finite K A := by
+  let : Algebra.IsIntegral K B := Algebra.IsIntegral.of_finite K B
+  let : Algebra.IsIntegral K A :=
+    Algebra.IsIntegral.of_isNilpotent_of_map_eq_zero f hker
+  exact Algebra.IsIntegral.finite (R := K) (A := A)
+
+end CentralAlgebra
