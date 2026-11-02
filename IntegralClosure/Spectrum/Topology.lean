@@ -5,6 +5,7 @@ Authors: Formal Frontier Agents
 module
 
 public import IntegralClosure.Spectrum
+public import IntegralClosure.TensorProduct
 public import Mathlib.RingTheory.Spectrum.Prime.Topology
 
 /-!
@@ -27,6 +28,12 @@ and embedding components. No surjectivity or closed-range conclusion for the
 spectrum map is asserted. The surjective criteria are recovered with exponent one;
 localization embeddings need not satisfy the power-image premise.
 
+If a prime `p` vanishes in an algebra and every element has a `p ^ r`-power
+in the scalar image for some `r`, the canonical spectrum map remains an embedding
+after arbitrary commutative-semiring base change. This follows from the prime-power
+image theorem for tensor products and the positive-power criterion below;
+it still asserts no closedness of the spectrum image.
+
 ## References
 
 - [Stacks Project, Tag 0BR8](https://stacks.math.columbia.edu/tag/0BR8)
@@ -39,7 +46,7 @@ localization embeddings need not satisfy the power-image premise.
 
 @[expose] public section
 
-universe u v
+universe u v w
 
 namespace PrimeSpectrum
 
@@ -76,5 +83,24 @@ theorem isEmbedding_comap_of_forall_pow_mem_range
     Topology.IsEmbedding (PrimeSpectrum.comap f) :=
   ⟨comap_isInducing_of_forall_pow_mem_range f hpow,
     comap_injective_of_forall_pow_mem_range f hpow⟩
+
+open scoped TensorProduct
+
+/-- The canonical prime-spectrum map after scalar extension is a topological
+embedding if a prime `p` vanishes in the original algebra and each element has
+a `p ^ r`-power in the scalar image for some `r`. -/
+theorem isEmbedding_comap_algebraMap_tensorProduct_of_forall_pow_pow_mem_range
+    {A : Type u} {B : Type v} {C : Type w}
+    [CommSemiring A] [CommSemiring B] [CommSemiring C]
+    [Algebra A B] [Algebra A C]
+    (p : ℕ) (hp : p.Prime) (hB : (p : B) = 0)
+    (hpow : ∀ b : B, ∃ r : ℕ, b ^ (p ^ r) ∈ Set.range (algebraMap A B)) :
+    Topology.IsEmbedding
+      (PrimeSpectrum.comap (algebraMap C (C ⊗[A] B))) := by
+  apply isEmbedding_comap_of_forall_pow_mem_range (algebraMap C (C ⊗[A] B))
+  intro x
+  obtain ⟨s, hs⟩ :=
+    Algebra.TensorProduct.exists_pow_pow_mem_range_algebraMap p hp hB hpow x
+  exact ⟨p ^ s, pow_pos hp.pos s, hs⟩
 
 end PrimeSpectrum

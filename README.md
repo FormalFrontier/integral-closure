@@ -338,3 +338,8 @@ same-file access.
 The project uses Lean `v4.34.0-rc2` and mathlib
 `83abb3e776bdefcbc447a1e44d0debe4010039e5`.
 
+
+
+## Prime-power images under scalar extension
+
+For commutative semirings `A`, `C`, `D` and a semiring `B` with given `A`-algebras, let `f : B →ₐ[A] D`. Suppose `p : ℕ` is prime, `(p : D) = 0`, and every `d : D` has some `d ^ (p ^ r)` in `Set.range f`. Then `Algebra.TensorProduct.exists_pow_pow_mem_range_map` gives every `x : C ⊗[A] D` some `x ^ (p ^ s)` in the image of the `C`-algebra map `Algebra.TensorProduct.map (AlgHom.id C C) f`; no vanishing in `A`, `B`, or `C` is required. In [TensorProduct](IntegralClosure/TensorProduct.lean), `Algebra.TensorProduct.map_id_ofId_comp_rid_symm` identifies tensoring `Algebra.ofId A B`, after the inverse right unit-tensor equivalence, with the original canonical `C`-map. For three commutative semirings `A`, `B`, `C`, `Algebra.TensorProduct.exists_pow_pow_mem_range_algebraMap` transfers the corresponding hypothesis, with `(p : B) = 0`, from `algebraMap A B` to `algebraMap C (C ⊗[A] B)`. Thus [`PrimeSpectrum.isEmbedding_comap_algebraMap_tensorProduct_of_forall_pow_pow_mem_range`](IntegralClosure/Spectrum/Topology.lean) makes `Spec(C ⊗[A] B) → Spec C` a topological embedding. Zero semirings are included; no uniform exponent or closedness is asserted.
