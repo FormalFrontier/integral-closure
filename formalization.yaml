@@ -4,7 +4,8 @@ project:
   description: >-
     Integral-closure descent along linear retractions and normal-domain descent
     from arbitrary field scalar extensions of commutative algebras, with power
-    criteria for integrality, finiteness and prime-spectrum embeddings.
+    criteria for integrality, finiteness and prime-spectrum embeddings, and
+    locality of integral domains integral over henselian local rings.
   authors:
     - Formal Frontier Agents
   license: Apache-2.0
@@ -13,10 +14,9 @@ sources:
     type: original-proof
     relationship: formalizes
     note: >-
-      Original production mathematical proofs and declarations were contributed
-      by Atlas; other Formal Frontier contributors assembled the ordinary module
-      interfaces and private clients. This independent library is not a thin
-      wrapper around a source-research adapter.
+      Atlas contributed the initial descent proofs and declarations.
+      Other Formal Frontier contributors developed further mathematical results,
+      module interfaces and examples.
   - title: "The Rising Sea: Foundations of Algebraic Geometry"
     authors:
       - Ravi Vakil
@@ -28,6 +28,17 @@ sources:
       for a forward normal-domain implication. This formalization proves descent
       for arbitrary field extensions. The book is not a project-licensed asset,
       a proof contributor, or an endorsement of this formalization.
+  - title: Local Fields and Their Extensions
+    authors:
+      - I. B. Fesenko
+      - S. V. Vostokov
+    type: book
+    location: "Second edition, 2002"
+    relationship: background
+    note: >-
+      The henselian locality theorem generalizes the valuation-ring setting to
+      commutative henselian local base rings that may have zero divisors.
+      No book excerpts or redistribution license are included.
 automation:
   methods:
     - method: agent
@@ -35,9 +46,10 @@ automation:
         Formal Frontier AI agents used Lean and mathlib with reviewed project
         contributions, ordinary imports and pinned toolchain/dependency revisions.
   notes: >-
-    Atlas contributed the production proofs; other contributors assembled
-    ordinary modules and private clients, and Folio contributed the README
-    headlines. No model, cost or performance measurements are reported here.
+    Atlas contributed the initial descent proofs; other Formal Frontier
+    contributors developed the later mathematics, module interfaces and
+    examples. Folio contributed the initial README headlines.
+    No model, cost or performance measurements are reported here.
 status:
   scope: >-
     An A-linear retraction of an injective algebra map into an integrally closed
@@ -48,6 +60,9 @@ status:
     embedding on prime spectra, without requiring the homomorphism to be
     surjective. This extends the surjective criterion, not all localization
     embeddings; no closed-range or spectral-surjectivity assertion is made.
+    A nonzero domain integral over a henselian local ring is local, without
+    assuming the base is a domain, the structural map injective, or the
+    extension finite as a module.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms:
@@ -55,6 +70,12 @@ status:
     - Classical.choice
     - Quot.sound
   main_results:
+    - declaration: HenselianLocalRing.isLocalRing_of_isIntegral
+      file: IntegralClosure/Henselian.lean
+      sorry_count: 0
+    - declaration: RingHom.isLocalRing_of_henselian_of_isIntegral
+      file: IntegralClosure/Henselian.lean
+      sorry_count: 0
     - declaration: PrimeSpectrum.comap_isInducing_of_forall_pow_mem_range
       file: IntegralClosure/Spectrum/Topology.lean
       sorry_count: 0
@@ -89,6 +110,9 @@ fidelity:
     asks whether finiteness is needed; the library's field-extension theorem
     omits finiteness, algebraicity and separability. The independent generic
     retraction theorem is an original generalization, not a book excerpt.
+    The henselian locality theorem allows non-domain base rings, beyond the
+    valuation-ring setting of Fesenko and Vostokov; its ring-homomorphism form
+    preserves the given structural map without an injectivity assumption.
 review:
   status: "other: independently reviewed"
   notes: >-
@@ -97,3 +121,30 @@ review:
 acknowledgements: >-
   Uses mathlib as a declared dependency. Vakil's book is cited only for the
   mathematical question, not as a formalization author or licensed project asset.
+  Henselian locality reuses the monic coprime-factor lifting theorem from
+  Formal Frontier's Adic Modules library.
+highlights:
+  - title: Integral domains over henselian local rings are local
+    statement: A nonzero commutative domain integral over a commutative henselian local ring is local, without injectivity or module-finiteness assumptions.
+    declarations:
+      - declaration: HenselianLocalRing.isLocalRing_of_isIntegral
+        file: IntegralClosure/Henselian.lean
+      - declaration: RingHom.isLocalRing_of_henselian_of_isIntegral
+        file: IntegralClosure/Henselian.lean
+  - title: Integral closedness descends along linear retractions
+    statement: An injective algebra map into an integrally closed domain with a linear left inverse gives integral closedness of its source.
+    declarations:
+      - declaration: IsIntegrallyClosed.of_linearRetract
+        file: IntegralClosure/LinearRetract.lean
+  - title: Normal-domain descent from arbitrary field scalar extensions
+    statement: If scalar extension of a commutative algebra by any field extension is an integrally closed domain, then the original algebra is an integrally closed domain.
+    declarations:
+      - declaration: Algebra.TensorProduct.isDomain_left
+        file: IntegralClosure/TensorProduct.lean
+      - declaration: Algebra.TensorProduct.isIntegrallyClosed_left
+        file: IntegralClosure/TensorProduct.lean
+  - title: Prime-spectrum embeddings from powers in the image
+    statement: A homomorphism of commutative semirings for which each target element has a positive power in its image induces a topological embedding on prime spectra.
+    declarations:
+      - declaration: PrimeSpectrum.isEmbedding_comap_of_forall_pow_mem_range
+        file: IntegralClosure/Spectrum/Topology.lean

@@ -19,10 +19,16 @@ rev = "83abb3e776bdefcbc447a1e44d0debe4010039e5"
 [[require]]
 name = "groupTheory"
 git = "https://github.com/FormalFrontier/group-theory.git"
-rev = "9b042f1dd0157a784973716a9df82f2135916909"
+rev = "4791da691c8cf6f7bf40caf2606e17e46b432e08"
+
+[[require]]
+name = "adic-modules"
+git = "https://github.com/FormalFrontier/adic-modules.git"
+rev = "2fb498d13a8195ddd32e0462f7983828f61aece1"
 
 [[lean_lib]]
 name = "IntegralClosure"
+roots = ["IntegralClosure", "IntegralClosure.Henselian"]
 
 [[lean_lib]]
 name = "IntegralClosureTest"

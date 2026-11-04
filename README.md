@@ -12,6 +12,18 @@ descent.
 
 ## Headline results
 
+- **Integral domains over henselian local rings are local.** Let `R` and `S`
+  be commutative rings in independent universes, with a given `R`-algebra
+  structure on `S`. If `R` is henselian local, `S` is a nonzero domain and
+  `S` is integral over `R`, then
+  `HenselianLocalRing.isLocalRing_of_isIntegral R S` gives `IsLocalRing S`.
+  The base `R` need not be a domain or reduced; injectivity of the algebra
+  map, module finiteness, Noetherianity and completeness are not assumed.
+  Import [`IntegralClosure.Henselian`](IntegralClosure/Henselian.lean).
+  The unital-homomorphism form
+  `RingHom.isLocalRing_of_henselian_of_isIntegral alpha h` instead takes
+  `alpha : R →+* S` with `h : alpha.IsIntegral`, without a chosen algebra
+  structure.
 - For a homomorphism `f : A →+* B` of commutative rings, if each target element
   has a positive power in the image, contraction is an order isomorphism from
   radical ideals of `B` to radical ideals of `A` containing `RingHom.ker f`.
@@ -129,8 +141,17 @@ and uses [Group Theory](https://github.com/FormalFrontier/group-theory)'s
 zero-sum unit-transfer API. Subalgebra finiteness uses mathlib's adjoin-span
 and adjoin-union formulas and finite generation of submodule products.
 
-Import [`IntegralClosure`](IntegralClosure.lean) for all these families; the two
-descent leaves are `IntegralClosure.LinearRetract` and
+The henselian locality result generalizes the valuation-ring setting of
+I. B. Fesenko and S. V. Vostokov, *Local Fields and Their Extensions*, second
+edition (2002), to henselian local base rings that need not be domains. Its
+one-element annihilator argument uses lifted coprime factors and a
+domain contradiction. It reuses `HenselianRing.exists_monic_factorization`
+from Formal Frontier's [Adic Modules](https://github.com/FormalFrontier/adic-modules)
+library.
+
+Import [`IntegralClosure`](IntegralClosure.lean) for the descent, power and
+unit-relation families; import `IntegralClosure.Henselian` for henselian locality.
+The two descent leaves are `IntegralClosure.LinearRetract` and
 `IntegralClosure.TensorProduct`. The [API and examples below](#public-api-and-examples)
 give the complete descent signatures, usage and proof explanations; the
 [manual guide](docs/README.md) also covers power criteria and unit relations.
@@ -331,12 +352,16 @@ lake build IntegralClosureTest
 The default `lake build` builds both the production library and the rootless
 test library. To build individual production modules, run
 `lake build IntegralClosure.LinearRetract IntegralClosure.TensorProduct IntegralClosure`.
-Warnings are fatal in the mathematical leaves and test clients. The latter
-exercise the public surface through ordinary imports rather than privileged
-same-file access.
+Required CI rejects build warnings from the mathematical leaves and test
+clients. The latter exercise the public surface through ordinary imports
+rather than privileged same-file access.
 
 The project uses Lean `v4.34.0-rc2` and mathlib
-`83abb3e776bdefcbc447a1e44d0debe4010039e5`.
+`83abb3e776bdefcbc447a1e44d0debe4010039e5`. Its other direct dependencies are
+[Group Theory](https://github.com/FormalFrontier/group-theory) at
+`4791da691c8cf6f7bf40caf2606e17e46b432e08` and
+[Adic Modules](https://github.com/FormalFrontier/adic-modules) at
+`2fb498d13a8195ddd32e0462f7983828f61aece1`.
 
 
 
