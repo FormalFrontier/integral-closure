@@ -12,6 +12,20 @@ descent.
 
 ## Headline results
 
+- **Local normal integral extensions of valuation domains are valuation domains.**
+  For commutative domains `R` and `S` in independent universes, an integral
+  homomorphism `f : R →+* S` from a valuation domain to a local integrally
+  closed domain gives `ValuationRing S` through
+  `RingHom.IsIntegral.isValuationRing_of_isLocalRing`.
+  The map may be noninjective. Neither module finiteness, Henselianity,
+  Noetherianity nor separability is assumed. Import
+  [`IntegralClosure.ValuationRing`](IntegralClosure/ValuationRing.lean) or the
+  root `IntegralClosure`.
+  Its supporting theorem
+  `LocalSubring.mem_or_inv_mem_of_isUnit_coeff` applies to a local subring
+  integrally closed in any ambient field: a root of a polynomial with a unit coefficient
+  lies in that subring or has its inverse there. It uses the original subring
+  inclusion and requires the coefficient to be a unit in the subring itself.
 - **Integral domains over henselian local rings are local.** Let `R` and `S`
   be commutative rings in independent universes, with a given `R`-algebra
   structure on `S`. If `R` is henselian local, `S` is a nonzero domain and
@@ -140,6 +154,20 @@ refines its `RingHom.IsIntegral.isLocalHom` argument
 and uses [Group Theory](https://github.com/FormalFrontier/group-theory)'s
 zero-sum unit-transfer API. Subalgebra finiteness uses mathlib's adjoin-span
 and adjoin-union formulas and finite generation of submodule products.
+
+The valuation-domain criterion is standard commutative algebra. Its proof uses
+Mathlib's valuation-overring intersection, explicit coefficients of division by
+a linear monic polynomial, and total divisibility in a valuation domain. The
+possibly noninjective map is handled through its image, a quotient of the
+source; all fraction-field constructions are internal. Locality and normality
+of the target remain hypotheses. This criterion alone does not identify a
+canonical integral closure with an ambient integer ring or show that its
+fraction field is an arbitrary specified extension field.
+
+The motivating valuation-domain setting is Fesenko–Vostokov,
+*Local Fields and Their Extensions*, second edition (2002). The generic criterion
+and its linear-quotient proof are not claimed to reproduce a particular passage
+or proof of that book.
 
 The henselian locality result generalizes the valuation-ring setting of
 I. B. Fesenko and S. V. Vostokov, *Local Fields and Their Extensions*, second
